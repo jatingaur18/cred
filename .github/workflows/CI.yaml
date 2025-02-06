@@ -2,7 +2,7 @@ name: Formatter & CI
 on:
   pull_request:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
