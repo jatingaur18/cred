@@ -3,17 +3,13 @@ const fs = require('fs').promises;
 
 async function parseXML(filePath) {
     try {
-        // Read XML file
         const xmlData = await fs.readFile(filePath, 'utf8');
         
-        // Parse XML to JS object
         const parser = new xml2js.Parser({ explicitArray: false });
         const result = await parser.parseStringPromise(xmlData);
         
-        // Extract profile response
         const profileData = result.INProfileResponse;
         
-        // Extract basic details
         const basicDetails = {
             name: {
                 firstName: profileData.Current_Application.Current_Application_Details.Current_Applicant_Details.First_Name || '',
@@ -24,7 +20,6 @@ async function parseXML(filePath) {
             creditScore: profileData.SCORE ? profileData.SCORE.BureauScore : ''
         };
         
-        // Extract report summary
         const summary = {
             totalAccounts: parseInt(profileData.CAIS_Account.CAIS_Summary.Credit_Account.CreditAccountTotal) || 0,
             activeAccounts: parseInt(profileData.CAIS_Account.CAIS_Summary.Credit_Account.CreditAccountActive) || 0,
@@ -35,7 +30,6 @@ async function parseXML(filePath) {
             last7DaysEnquiries: parseInt(profileData.TotalCAPS_Summary.TotalCAPSLast7Days) || 0
         };
         
-        // Extract credit accounts information
         const creditAccounts = profileData.CAIS_Account.CAIS_Account_DETAILS.map(account => ({
             accountType: account.Account_Type,
             bank: account.Subscriber_Name ? account.Subscriber_Name.trim() : '',
@@ -52,15 +46,12 @@ async function parseXML(filePath) {
             }
         }));
         
-        // Filter credit cards (account type 10 typically represents credit cards)
         const creditCards = creditAccounts.filter(account => account.accountType === '10');
         
-        // Compile all unique addresses
         const uniqueAddresses = [...new Set(creditAccounts.map(account => 
             JSON.stringify(account.address)
         ))].map(addr => JSON.parse(addr));
         
-        // Construct final structured data
         const structuredData = {
             basicDetails,
             reportSummary: summary,

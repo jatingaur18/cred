@@ -1,4 +1,3 @@
-// schemas/profileSchema.js
 module.exports = {
   $jsonSchema: {
       bsonType: "object",

@@ -15,10 +15,9 @@ module.exports = function(db){
         return res.status(404).json({ message: 'Profile not found' });
       }
     
-      // Ensure _id is returned as an ObjectId
       res.status(200).json({
         ...profile,
-        _id: profile._id  // This preserves the original ObjectId
+        _id: profile._id  
       });
     } catch (error) {
       console.error('Error fetching profile:', error);
