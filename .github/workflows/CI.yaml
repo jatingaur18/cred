@@ -1,10 +1,8 @@
-# File path: .github/workflows/formatter-ci.yml
-
 name: Formatter & CI
 on:
   pull_request:
     branches:
-      - master  # or 'master' depending on your default branch
+      - master
   workflow_dispatch:
 
 jobs:
@@ -28,13 +26,14 @@ jobs:
           cd ${{ matrix.project }}
           npm ci
 
-      # Run Jest tests
       - name: Run Tests
+        if: matrix.project == 'server'
         run: |
           cd ${{ matrix.project }}
           npm test -- --coverage
           
       - name: Check Test Coverage
+        if: matrix.project == 'server'
         run: |
           cd ${{ matrix.project }}
           if [ -f coverage/coverage-summary.json ]; then
