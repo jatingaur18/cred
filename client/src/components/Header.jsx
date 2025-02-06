@@ -14,20 +14,19 @@ function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Define Tailwind classes based on dark mode state
   const bgColor = isDarkMode ? 'bg-gray-800' : 'bg-white';
   const textColor = isDarkMode ? 'text-gray-200' : 'text-gray-700';
   const hoverTextColor = isDarkMode ? 'hover:text-gray-100' : 'hover:text-blue-900';
-  const activeTextColor = 'text-blue-900'; //Active state should likely remain constant
+  const activeTextColor = 'text-blue-900';
   const mobileMenuBgColor = isDarkMode ? 'bg-gray-800' : 'bg-white';
-  const shadow = isDarkMode ? 'shadow-none' : 'shadow';  // Remove shadow in dark mode if desired
+  const shadow = isDarkMode ? 'shadow-none' : 'shadow';  
   const buttonBgColor = isDarkMode ? 'bg-gray-700 text-yellow-400 hover:bg-gray-600' : 'bg-white text-gray-800 hover:bg-gray-100';
 
   return (
     <header className={`${shadow} sticky z-50 top-0 transition-all duration-300`}>
       <nav className={`${bgColor} border-gray-200 px-4 lg:px-6 py-2.5 transition-colors duration-300`}>
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl relative">
-          {/* Logo and Mobile Controls */}
+
           <div className="flex items-center justify-between w-full lg:w-auto">
             <Link to="/" className="flex items-center">
               <img
@@ -37,10 +36,9 @@ function Header() {
               />
             </Link>
 
-            {/* Mobile Controls */}
+
             <div className="flex items-center lg:hidden">
 
-              {/* Menu Toggle */}
               <button
                 onClick={handleMenuToggle}
                 className={`${textColor} focus:outline-none transition-colors duration-300`}
@@ -51,8 +49,6 @@ function Header() {
           </div>
 
 
-
-          {/* Mobile Menu */}
           <div
             className={`
               ${isMenuOpen ? 'block' : 'hidden'}

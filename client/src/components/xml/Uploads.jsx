@@ -234,10 +234,8 @@ const FileUploadWithProfiles = () => {
                         )}
                     </div>
                 </div>
-                {/* Search and Filters Section */}
                 <div className={`${cardBgColor} ${shadowColor} backdrop-blur-sm rounded-2xl p-8 mb-8 transition-colors duration-300`}>
                     <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 mb-6">
-                        {/* Search Bar */}
                         <div className="relative flex-1">
                             <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${iconColor} w-5 h-5 transition-colors duration-300`} />
                             <input
@@ -249,7 +247,6 @@ const FileUploadWithProfiles = () => {
                             />
                         </div>
 
-                        {/* Filter Toggle */}
                         <button
                             onClick={() => setShowFilters(!showFilters)}
                             className={`flex items-center px-4 py-2 rounded-xl border ${inputBorderColor} ${hoverBorderColor} transition-all ${buttonTextColor} ${buttonHoverColor}`}
@@ -259,11 +256,9 @@ const FileUploadWithProfiles = () => {
                         </button>
                     </div>
 
-                    {/* Filter Panel */}
                     {showFilters && (
                         <div className={`p-4 ${filterBgColor} rounded-xl mb-6 transition-colors duration-300`}>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                {/* Score Range Filter */}
                                 <div>
                                     <label className={`block text-sm font-medium ${textColor} mb-2 transition-colors duration-300`}>Credit Score Range</label>
                                     <div className="flex items-center space-x-2">
@@ -293,7 +288,6 @@ const FileUploadWithProfiles = () => {
                                     </div>
                                 </div>
 
-                                {/* Sort By Filter */}
                                 <div>
                                     <label className={`block text-sm font-medium ${textColor} mb-2 transition-colors duration-300`}>Sort By</label>
                                     <select
@@ -306,7 +300,6 @@ const FileUploadWithProfiles = () => {
                                     </select>
                                 </div>
 
-                                {/* Sort Order */}
                                 <div>
                                     <label className={`block text-sm font-medium ${textColor} mb-2 transition-colors duration-300`}>Sort Order</label>
                                     <button
@@ -324,7 +317,6 @@ const FileUploadWithProfiles = () => {
                         </div>
                     )}
 
-                    {/* Stats Summary */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                         <div className={`${isDarkMode ? 'bg-gray-700' : 'bg-blue-50'} p-4 rounded-xl transition-colors duration-300`}>
                             <div className={`text-sm ${textColor} transition-colors duration-300`}>Total Profiles</div>
@@ -350,7 +342,6 @@ const FileUploadWithProfiles = () => {
                         </div>
                     </div>
                 </div>
-                {/* Profiles List */}
                 <div className={`${cardBgColor} ${shadowColor} backdrop-blur-sm rounded-2xl p-8 transition-colors duration-300`}>
                     <h2 className={`text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 transition-colors duration-300`}>
                         Credit Profiles ({filteredProfiles.length})

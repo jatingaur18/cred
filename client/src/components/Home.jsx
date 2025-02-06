@@ -17,14 +17,12 @@ const LandingPage = () => {
 
   return (
     <div className={`min-h-screen ${bgColor} transition-colors duration-300`}>
-      {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-100 rounded-full opacity-20 blur-3xl"></div>
         <div className="absolute top-1/2 -left-40 w-80 h-80 bg-purple-100 rounded-full opacity-20 blur-3xl"></div>
       </div>
 
       <div className="relative max-w-5xl mx-auto px-4 py-20">
-        {/* Hero Section */}
         <div className="text-center mb-16 space-y-6">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Welcome to CreditSea
@@ -43,7 +41,6 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Main Features */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <div className={`${cardBgColor} backdrop-blur-sm p-8 rounded-2xl ${shadowColor} hover:${hoverShadowColor} transition-shadow duration-300`}>
             <div className="mb-6">
@@ -70,7 +67,6 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Process Steps */}
         <div className={`${cardBgColor} backdrop-blur-sm rounded-2xl ${shadowColor} p-8 mb-16 transition-shadow duration-300`}>
           <h2 className={`text-3xl font-semibold ${cardTextColor} mb-8 text-center transition-colors duration-300`}>How It Works</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -105,7 +101,6 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Features Grid */}
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
