@@ -34,13 +34,10 @@ const FileUploadWithProfiles = () => {
         sortOrder: 'desc'
     });
     const [showFilters, setShowFilters] = useState(false);
-    const [selectedProfiles, setSelectedProfiles] = useState([]);
     const nav = useNavigate();
 
-    // Access ThemeContext
     const { isDarkMode } = useContext(ThemeContext);
 
-    // Tailwind classes based on theme
     const bgColor = isDarkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50';
     const textColor = isDarkMode ? 'text-gray-200' : 'text-gray-600';
     const cardBgColor = isDarkMode ? 'bg-gray-800/80' : 'bg-white/80';
@@ -63,11 +60,10 @@ const FileUploadWithProfiles = () => {
     const fetchProfiles = async () => {
         try {
             const response = await fetch('http://localhost:3000/fetchlist', {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ user: { username: localStorage.getItem('username') } }),
+                }
             });
 
             if (!response.ok) {
@@ -75,6 +71,7 @@ const FileUploadWithProfiles = () => {
             }
 
             const data = await response.json();
+            console.log(data)
             setProfiles(data);
         } catch (err) {
             setError('Failed to load profiles: ' + err.message);
@@ -130,6 +127,7 @@ const FileUploadWithProfiles = () => {
     };
 
     const filteredProfiles = useMemo(() => {
+
         return profiles
             .filter(profile => {
                 const fullName = `${profile.basicDetails.name.firstName} ${profile.basicDetails.name.lastName}`.toLowerCase();
@@ -152,24 +150,12 @@ const FileUploadWithProfiles = () => {
                         ? parseInt(a.basicDetails.creditScore) - parseInt(b.basicDetails.creditScore)
                         : parseInt(b.basicDetails.creditScore) - parseInt(a.basicDetails.creditScore);
                 }
-                // Add more sort options as needed
                 return 0;
             });
     }, [profiles, searchTerm, filters]);
 
-    const handleExportSelected = () => {
-        // Implementation for exporting selected profiles
-        console.log('Exporting profiles:', selectedProfiles);
-    };
-
-    const handleDeleteSelected = () => {
-        // Implementation for deleting selected profiles
-        console.log('Deleting profiles:', selectedProfiles);
-    };
-
     return (
         <div className={`min-h-screen ${bgColor} ${textColor} py-12 transition-colors duration-300`}>
-            {/* Background effects */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-100 rounded-full opacity-20 blur-3xl"></div>
                 <div className="absolute top-1/2 -left-40 w-80 h-80 bg-purple-100 rounded-full opacity-20 blur-3xl"></div>
@@ -270,26 +256,6 @@ const FileUploadWithProfiles = () => {
                             <SlidersHorizontal className="w-5 h-5 mr-2" />
                             Filters
                         </button>
-
-                        {/* Bulk Actions */}
-                        <div className="flex space-x-2">
-                            <button
-                                onClick={handleExportSelected}
-                                disabled={selectedProfiles.length === 0}
-                                className={`flex items-center px-4 py-2 rounded-xl border ${inputBorderColor} ${hoverBorderColor} transition-all disabled:opacity-50 disabled:cursor-not-allowed ${buttonTextColor} ${buttonHoverColor}`}
-                            >
-                                <Download className="w-5 h-5 mr-2" />
-                                Export
-                            </button>
-                            <button
-                                onClick={handleDeleteSelected}
-                                disabled={selectedProfiles.length === 0}
-                                className={`flex items-center px-4 py-2 rounded-xl border border-red-200 text-red-600 ${buttonHoverColor} transition-all disabled:opacity-50 disabled:cursor-not-allowed`}
-                            >
-                                <Trash2 className="w-5 h-5 mr-2" />
-                                Delete
-                            </button>
-                        </div>
                     </div>
 
                     {/* Filter Panel */}
@@ -396,18 +362,6 @@ const FileUploadWithProfiles = () => {
                                 className={`py-6 ${profileHoverColor} transition duration-300 rounded-xl px-4 -mx-4`}
                             >
                                 <div className="flex items-center mb-3">
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedProfiles.includes(profile._id)}
-                                        onChange={(e) => {
-                                            if (e.target.checked) {
-                                                setSelectedProfiles([...selectedProfiles, profile._id]);
-                                            } else {
-                                                setSelectedProfiles(selectedProfiles.filter(id => id !== profile._id));
-                                            }
-                                        }}
-                                        className="mr-4 w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                                    />
                                     <button
                                         onClick={() => nav(`/profile/${profile._id}`)}
                                         className="flex-1 flex items-center justify-between group"

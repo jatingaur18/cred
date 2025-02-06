@@ -1,10 +1,10 @@
 export const fetchProfileData = async (id) => {
     const response = await fetch(`http://localhost:3000/fetchprofile/${id}`, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user: { username: localStorage.getItem('username') } }),
+      
     });
   
     if (!response.ok) {
