@@ -1,5 +1,5 @@
 export const fetchProfileData = async (id) => {
-    const response = await fetch(`http://34.93.128.239:4000/${id}`, {
+    const response = await fetch(`${BACKEND_API}/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

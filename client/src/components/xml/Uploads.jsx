@@ -59,7 +59,7 @@ const FileUploadWithProfiles = () => {
 
     const fetchProfiles = async () => {
         try {
-            const response = await fetch('http://34.93.128.239:4000/fetchlist', {
+            const response = await fetch(`${BACKEND_API}/fetchlist`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const FileUploadWithProfiles = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://34.93.128.239:4000/upload', {
+            const response = await fetch(`${BACKEND_API}/upload`, {
                 method: 'POST',
                 body: formData,
                 headers: {
