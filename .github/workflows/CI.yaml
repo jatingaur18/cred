@@ -2,7 +2,7 @@ name: Formatter & CI
 on:
   pull_request:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -16,16 +16,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Setup Node.js for the specified version in the matrix
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
           
+      # Install dependencies for the respective project
       - name: Install Dependencies
         run: |
           cd ${{ matrix.project }}
           npm ci
-
+          
       - name: Run Tests
         if: matrix.project == 'server'
         run: |
