@@ -1,8 +1,10 @@
+# File path: .github/workflows/formatter-ci.yml
+
 name: Formatter & CI
 on:
   pull_request:
     branches:
-      - master
+      - master  # or 'master' depending on your default branch
   workflow_dispatch:
 
 jobs:
@@ -16,17 +18,32 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Setup Node.js for the specified version in the matrix
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
           
-      # Install dependencies for the respective project
       - name: Install Dependencies
         run: |
           cd ${{ matrix.project }}
           npm ci
+
+      # Run Jest tests
+      - name: Run Tests
+        run: |
+          cd ${{ matrix.project }}
+          npm test -- --coverage
+          
+      - name: Check Test Coverage
+        run: |
+          cd ${{ matrix.project }}
+          if [ -f coverage/coverage-summary.json ]; then
+            COVERAGE=$(node -pe "require('./coverage/coverage-summary.json').total.lines.pct")
+            if [ $(echo "$COVERAGE < 80" | bc -l) -eq 1 ]; then
+              echo "Test coverage ($COVERAGE%) is below 80%"
+              exit 1
+            fi
+          fi
 
       - name: Build and Run
         env:
