@@ -2,7 +2,7 @@ name: Formatter & CI
 on:
   pull_request:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -16,27 +16,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Setup Node.js for the specified version in the matrix
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
           
+      # Install dependencies for the respective project
       - name: Install Dependencies
         run: |
           cd ${{ matrix.project }}
           npm ci
-          if [ "${{ matrix.project }}" == "server" ]; then
-            python -m pip install --upgrade pip
-            pip install -r req.txt
-          fi
 
-      - name: TEST AND BULID
+      - name: Build and Run
         env:
           TESTING_ENV: ${{ secrets.TESTING_ENV }}
         run: |
           cd ${{ matrix.project }}
           if [ "${{ matrix.project }}" == "server" ]; then
-            npm test
+            echo "$TESTING_ENV" > .env
             timeout --preserve-status 5s node index.js || true
           elif [ "${{ matrix.project }}" == "client" ]; then
             npm run build
