@@ -1,8 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const path = require('path');
-
-// First modify your upload.js to export both router and initialization function
+const fs = require('fs');
 const upload = require('../api/upload');
 const parseXML = require('../utils/parser');
 
@@ -11,10 +10,11 @@ jest.mock('mongodb');
 
 let app;
 let mockDb;
+const uploadsDir = path.join(__dirname, '../uploads/'); // Replace with the actual uploads folder path
 
 beforeEach(() => {
   app = express();
-  
+
   mockDb = {
     collection: jest.fn().mockReturnValue({
       insertOne: jest.fn().mockResolvedValue({ insertedId: 'mock-id' })
@@ -28,6 +28,16 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.clearAllMocks();
+});
+
+afterAll(() => {
+  // Clear all files in the uploads folder after the tests
+  fs.readdirSync(uploadsDir).forEach((file) => {
+    const filePath = path.join(uploadsDir, file);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath); // Delete each file in the uploads folder
+    }
+  });
 });
 
 describe('File Upload Router', () => {
@@ -81,6 +91,7 @@ describe('File Upload Router', () => {
 
     expect(response.status).toBe(202);
     expect(response.body.message).toBe('Database not connected Properly');
+    
   });
 
   test('should handle MongoDB schema validation error', async () => {
