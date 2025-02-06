@@ -30,7 +30,7 @@ const FileUploadWithProfiles = () => {
     const [filters, setFilters] = useState({
         scoreRange: [0, 900],
         dateRange: 'all',
-        sortBy: 'date',
+        sortBy: 'name',
         sortOrder: 'desc'
     });
     const [showFilters, setShowFilters] = useState(false);
@@ -59,7 +59,7 @@ const FileUploadWithProfiles = () => {
 
     const fetchProfiles = async () => {
         try {
-            const response = await fetch('http://localhost:3000/fetchlist', {
+            const response = await fetch('http://34.93.128.239:4000/fetchlist', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const FileUploadWithProfiles = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://localhost:3000/upload', {
+            const response = await fetch('http://34.93.128.239:4000/upload', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -117,6 +117,7 @@ const FileUploadWithProfiles = () => {
                 throw new Error(data.message || 'Upload failed');
             }
 
+            setFile(null)
             setResponse(data);
             await fetchProfiles();
         } catch (err) {
@@ -300,7 +301,6 @@ const FileUploadWithProfiles = () => {
                                         onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
                                         className={`w-full px-3 py-2 rounded-lg border ${inputBorderColor} ${textColor}`}
                                     >
-                                        <option value="date">Date</option>
                                         <option value="name">Name</option>
                                         <option value="score">Credit Score</option>
                                     </select>

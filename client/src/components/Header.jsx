@@ -91,16 +91,14 @@ function Header() {
                 </NavLink>
 
               </li>
-              <li>
+            </ul>
+          </div>
                 <button
                   onClick={() => setIsDarkMode(!isDarkMode)}
-                  className={`fixed top-4 right-4 p-2  rounded-full transition-colors duration-300 ${buttonBgColor} shadow-lg`}
+                  className={`fixed top-4 right-4 p-2 mt-20 mr-5 rounded-full transition-colors duration-300 ${buttonBgColor} shadow-lg`}
                 >
                   {isDarkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
                 </button>
-              </li>
-            </ul>
-          </div>
         </div>
       </nav>
     </header>

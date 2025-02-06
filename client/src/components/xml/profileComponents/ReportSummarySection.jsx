@@ -81,7 +81,7 @@ export const ReportSummarySection = ({ darkMode, profileData }) => {
                 paddingAngle={5}
                 dataKey="value"
                 labelLine={false}
-                label={props => CustomLabel({ ...props, darkMode })}
+                // label={props => CustomLabel({ ...props, darkMode })}
               >
                 {balanceData.map((entry, index) => (
                   <Cell 

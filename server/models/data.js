@@ -1,135 +1,128 @@
-db.runCommand({
-    collMod: "profiles",
-    validator: {
-        $jsonSchema: {
-          bsonType: "object",
-          required: ["basicDetails", "reportSummary", "creditAccounts", "metadata"],
-          properties: {
-            _id: {
+// schemas/profileSchema.js
+module.exports = {
+  $jsonSchema: {
+      bsonType: "object",
+      required: ["_id", "basicDetails", "reportSummary", "creditAccounts", "metadata"],
+      properties: {
+          _id: {
               bsonType: "objectId"
-            },
-            basicDetails: {
+          },
+          basicDetails: {
               bsonType: "object",
               required: ["name", "mobilePhone", "pan", "creditScore"],
               properties: {
-                name: {
-                  bsonType: "object",
-                  required: ["firstName", "lastName"],
-                  properties: {
-                    firstName: { bsonType: "string" },
-                    lastName: { bsonType: "string" }
-                  }
-                },
-                mobilePhone: { bsonType: "string" },
-                pan: { bsonType: "string" },
-                creditScore: { bsonType: "string" }
+                  name: {
+                      bsonType: "object",
+                      required: ["firstName", "lastName"],
+                      properties: {
+                          firstName: { bsonType: "string" },
+                          lastName: { bsonType: "string" }
+                      }
+                  },
+                  mobilePhone: { bsonType: "string" },
+                  pan: { bsonType: "string" },
+                  creditScore: { bsonType: "string" }
               }
-            },
-            reportSummary: {
+          },
+          reportSummary: {
               bsonType: "object",
               required: [
-                "totalAccounts",
-                "activeAccounts",
-                "closedAccounts",
-                "currentBalanceTotal",
-                "securedAmount",
-                "unsecuredAmount",
-                "last7DaysEnquiries"
+                  "totalAccounts", "activeAccounts", "closedAccounts", 
+                  "currentBalanceTotal", "securedAmount", "unsecuredAmount", 
+                  "last7DaysEnquiries"
               ],
               properties: {
-                totalAccounts: { bsonType: "int" },
-                activeAccounts: { bsonType: "int" },
-                closedAccounts: { bsonType: "int" },
-                currentBalanceTotal: { bsonType: "int" },
-                securedAmount: { bsonType: "int" },
-                unsecuredAmount: { bsonType: "int" },
-                last7DaysEnquiries: { bsonType: "int" }
+                  totalAccounts: { bsonType: "int" },
+                  activeAccounts: { bsonType: "int" },
+                  closedAccounts: { bsonType: "int" },
+                  currentBalanceTotal: { bsonType: "int" },
+                  securedAmount: { bsonType: "int" },
+                  unsecuredAmount: { bsonType: "int" },
+                  last7DaysEnquiries: { bsonType: "int" }
               }
-            },
-            creditAccounts: {
+          },
+          creditAccounts: {
               bsonType: "object",
-              required: ["all", "creditCards", "addresses"],
+              required: ["all", "creditCards"],
               properties: {
-                all: {
-                  bsonType: "array",
-                  items: {
-                    bsonType: "object",
-                    required: ["accountType", "bank", "accountNumber", "amountOverdue", "currentBalance", "address"],
-                    properties: {
-                      accountType: { bsonType: "string" },
-                      bank: { bsonType: "string" },
-                      accountNumber: { bsonType: "string" },
-                      amountOverdue: { bsonType: "int" },
-                      currentBalance: { bsonType: "int" },
-                      address: {
-                        bsonType: "object",
-                        required: ["line1", "line2", "city", "state", "pincode"],
-                        properties: {
-                          line1: { bsonType: "string" },
-                          line2: { bsonType: "string" },
-                          line3: { bsonType: "string" },
-                          city: { bsonType: "string" },
-                          state: { bsonType: "string" },
-                          pincode: { bsonType: "string" }
-                        }
+                  all: {
+                      bsonType: "array",
+                      items: {
+                          bsonType: "object",
+                          required: ["accountType", "bank", "accountNumber", "amountOverdue", "currentBalance", "address"],
+                          properties: {
+                              accountType: { bsonType: "string" },
+                              bank: { bsonType: "string" },
+                              accountNumber: { bsonType: "string" },
+                              amountOverdue: { bsonType: "int" },
+                              currentBalance: { bsonType: "int" },
+                              address: {
+                                  bsonType: "object",
+                                  required: ["line1", "line2", "line3", "city", "state", "pincode"],
+                                  properties: {
+                                      line1: { bsonType: "string" },
+                                      line2: { bsonType: "string" },
+                                      line3: { bsonType: "string" },
+                                      city: { bsonType: "string" },
+                                      state: { bsonType: "string" },
+                                      pincode: { bsonType: "string" }
+                                  }
+                              }
+                          }
                       }
-                    }
-                  }
-                },
-                creditCards: {
-                  bsonType: "array",
-                  items: {
-                    bsonType: "object",
-                    required: ["accountType", "bank", "accountNumber", "amountOverdue", "currentBalance", "address"],
-                    properties: {
-                      accountType: { bsonType: "string" },
-                      bank: { bsonType: "string" },
-                      accountNumber: { bsonType: "string" },
-                      amountOverdue: { bsonType: "int" },
-                      currentBalance: { bsonType: "int" },
-                      address: {
-                        bsonType: "object",
-                        required: ["line1", "line2", "city", "state", "pincode"],
-                        properties: {
-                          line1: { bsonType: "string" },
-                          line2: { bsonType: "string" },
-                          line3: { bsonType: "string" },
-                          city: { bsonType: "string" },
-                          state: { bsonType: "string" },
-                          pincode: { bsonType: "string" }
-                        }
+                  },
+                  creditCards: {
+                      bsonType: "array",
+                      items: {
+                          bsonType: "object",
+                          required: ["accountType", "bank", "accountNumber", "amountOverdue", "currentBalance", "address"],
+                          properties: {
+                              accountType: { bsonType: "string" },
+                              bank: { bsonType: "string" },
+                              accountNumber: { bsonType: "string" },
+                              amountOverdue: { bsonType: "int" },
+                              currentBalance: { bsonType: "int" },
+                              address: {
+                                  bsonType: "object",
+                                  required: ["line1", "line2", "line3", "city", "state", "pincode"],
+                                  properties: {
+                                      line1: { bsonType: "string" },
+                                      line2: { bsonType: "string" },
+                                      line3: { bsonType: "string" },
+                                      city: { bsonType: "string" },
+                                      state: { bsonType: "string" },
+                                      pincode: { bsonType: "string" }
+                                  }
+                              }
+                          }
                       }
-                    }
                   }
-                },
-                addresses: {
-                  bsonType: "array",
-                  items: {
-                    bsonType: "object",
-                    required: ["line1", "line2", "city", "state", "pincode"],
-                    properties: {
+              }
+          },
+          addresses: {
+              bsonType: "array",
+              items: {
+                  bsonType: "object",
+                  required: ["line1", "line2", "line3", "city", "state", "pincode"],
+                  properties: {
                       line1: { bsonType: "string" },
                       line2: { bsonType: "string" },
                       line3: { bsonType: "string" },
                       city: { bsonType: "string" },
                       state: { bsonType: "string" },
                       pincode: { bsonType: "string" }
-                    }
                   }
-                }
               }
-            },
-            metadata: {
+          },
+          metadata: {
               bsonType: "object",
               required: ["reportDate", "reportNumber", "reportTime"],
               properties: {
-                reportDate: { bsonType: "string" },
-                reportNumber: { bsonType: "string" },
-                reportTime: { bsonType: "string" }
+                  reportDate: { bsonType: "string" },
+                  reportNumber: { bsonType: "string" },
+                  reportTime: { bsonType: "string" }
               }
-            }
           }
-        }
-      },
-    validationLevel: "strict"
-  });
+      }
+  }
+};

@@ -9,7 +9,12 @@ jest.mock('../utils/parser');
 jest.mock('mongodb');
 
 let app;
-let mockDb;
+let mockDb = {
+  collection: jest.fn().mockReturnValue({
+    insertOne: jest.fn().mockResolvedValue({ insertedId: 'mock-id' }),
+    findOne: jest.fn().mockResolvedValue(null)  // Add findOne method that returns null by default
+  })
+};
 const uploadsDir = path.join(__dirname, '../uploads/'); // Replace with the actual uploads folder path
 
 beforeEach(() => {
